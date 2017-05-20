@@ -1,61 +1,40 @@
 'use strict';
 
-var webpack = require('webpack');
-var DashboardPlugin = require('webpack-dashboard/plugin');
+const webpack = require('webpack');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const ExtractText = require('extract-text-webpack-plugin');
+const HTMLPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/entry.js',
+    entry: `${__dirname}/app/entry.js`,
     output: {
-        path: 'dist/assets',
-        filename: 'bundle.js',
-        publicPath: 'assets'
+        path: 'build',
+        filename: 'bundle.js'
     },
-    devServer: {
-        inline: true,
-        contentBase: './dist',
-        port: 8080
+    sassLoader: {
+      includePaths: [`${__dirname}/app/scss/main`]
     },
     module: {
-     loaders: [
+loaders: [
+      {
+        test: /\.scss$/,
+        loader: ExtractText.extract('style', 'css!postcss!sass!'),
+      },
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
-        loader: ['babel-loader'],
-        query: {
-          presets: ['latest', 'es2015', 'react']
-        }
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
         loader: 'babel',
+        exclude: /node_modules/,
         query: {
-          presets: ['react']
-         }
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+          presets: ['es2015'],
+        },
       },
       {
         test: /\.html$/,
         loader: 'html',
       },
       {
-        test: /\.html$/,
-        loader: 'html-loader?attrs[]=video:src',
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
-      },
-      {
-        test: /\.mp4$/,
-        loader: 'url?limit=10000&mimetype=video/mp4',
-      },
-      {
         test: /\.(jpg|gif|png)$/,
-        loader: 'file?name=/img/[name].[ext]',
+        loader: 'file?name=img/[hash].[ext]',
       },
       {
         test: /\.svg.*/,
@@ -73,13 +52,13 @@ module.exports = {
         test: /\.eot.*/,
         loader: 'url?limit=10000&mimetype=application/vnd.ms-fontobject&name=fonts/[name].[ext]',
       },
-      {
-        test: /\.scss$/,
-        loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
-      }
-    ]
+    ],
   },
   plugins: [
+    new HTMLPlugin({
+      template: `${__dirname}/app/index.html`
+    }),
+    new ExtractTextPlugin('bundle.css'),
     new DashboardPlugin()
   ]
 }

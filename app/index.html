@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="cowsayApp">
+  <head>
+    <title>Controllers revisit</title>
+  </head>
+
+  <body>
+    <header>
+      <nav ng-controller="NavController as navCtrl">
+        <ul>
+          <li ng-repeat="route in navCtrl.routes">
+            <a href="{{ link.url }}">{{ route.name }}</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="container"
+               ng-controller="CowsayController as cowsayCtrl"
+               ng-init="cowsayCtrl.current = 'squirrel'">
+        <h2>{{ cowsayCtrl.title }}</h2>
+        <pre class="cow">
+          {{ cowsayCtrl.update(cowsayCtrl.text )}}
+        </pre>
+
+        <form
+          ng-submit="cowsayCtrl.speak(cowsayCtrl.text"
+    </main>
+  </body>
+</html>
