@@ -30,10 +30,10 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.17.0",
-    "webpack": "^2.5.1",
+    "webpack": "^1.14.0",
     "webpack-dashboard": "^0.4.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^1.16.2"
   }
 }
