@@ -41,7 +41,6 @@ function CowsayController($log) {
     this.history.pop();
     this.spoken = this.history.pop() || '';
     };
-
   };
 
 cowsayApp.controller('NavController', ['$log', NavController]);
